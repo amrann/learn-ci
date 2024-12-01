@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/android:2022.10
+      - image: cimg/openjdk:17.0
     environment:
       ANDROID_HOME: /opt/android/sdk
       PATH: /opt/android/sdk/platform-tools:/opt/android/sdk/tools:$PATH
@@ -17,6 +17,10 @@ jobs:
           command: |
             echo "ANDROID_HOME is set to $ANDROID_HOME"
             ls -l $ANDROID_HOME
+      - run:
+          name: Install Android SDK Components
+          command: |
+            sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
       - run:
           name: Create local.properties
           command: echo "sdk.dir=$ANDROID_HOME" > local.properties
