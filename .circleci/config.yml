@@ -2,16 +2,18 @@ version: 2.1
 
 orbs:
   android: circleci/android@0.2.1
-  
+
 jobs:
   build:
-    # executor: android/android
     docker:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
       - restore_cache:
           key: android-orb-v1-
+      - run:
+          name: Create local.properties
+          command: echo "sdk.dir=/opt/android/sdk" > local.properties
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
@@ -26,9 +28,9 @@ jobs:
       - run:
           name: Run Build
           command: ./gradlew build
-      - store_artifacts: 
+      - store_artifacts:
           path: app/build/reports
           destination: reports
-      - store_artifacts:  
+      - store_artifacts:
           path: app/build/outputs/apk/debug/
-          destination: artifact-file  
+          destination: artifact-file
