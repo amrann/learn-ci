@@ -11,6 +11,9 @@ jobs:
       ANDROID_HOME: /opt/android/sdk
       PATH: /opt/android/sdk/platform-tools:/opt/android/sdk/tools:$PATH
     steps:
+      - run:
+          name: Install SSH Client
+          command: sudo apt-get update && sudo apt-get install -y openssh-client
       - checkout
       - run:
           name: Verify ANDROID_HOME
