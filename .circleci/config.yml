@@ -7,16 +7,13 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0
-    environment:
-      ANDROID_HOME: /opt/android/sdk
-      PATH: /opt/android/sdk/platform-tools:/opt/android/sdk/tools:$PATH
     steps:
+      - run:
+          name: Install SSH Client
+          command: sudo apt-get update && sudo apt-get install -y openssh-client
       - checkout
       - restore_cache:
           key: android-orb-v1-
-      - run:
-          name: Verify Android SDK Installation
-          command: ls -l $ANDROID_HOME
       - run:
           name: Create local.properties
           command: echo "sdk.dir=/opt/android/sdk" > local.properties
