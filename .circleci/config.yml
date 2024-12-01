@@ -6,17 +6,26 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/android:2022.11.2
+    environment:
+      ANDROID_HOME: /opt/android/sdk
+      PATH: /opt/android/sdk/platform-tools:/opt/android/sdk/tools:$PATH
     steps:
-      - run:
-          name: Install SSH Client
-          command: sudo apt-get update && sudo apt-get install -y openssh-client
       - checkout
-      - restore_cache:
-          key: android-orb-v1-
+      - run:
+          name: Verify ANDROID_HOME
+          command: |
+            echo "ANDROID_HOME is set to $ANDROID_HOME"
+            ls -l $ANDROID_HOME
       - run:
           name: Create local.properties
-          command: echo "sdk.dir=/opt/android/sdk" > local.properties
+          command: echo "sdk.dir=$ANDROID_HOME" > local.properties
+      - run:
+          name: Install Android SDK Components
+          command: |
+            sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+      - restore_cache:
+          key: android-orb-v1-
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
