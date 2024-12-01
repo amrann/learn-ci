@@ -1,28 +1,44 @@
 version: 2.1
-
 orbs:
-  android: circleci/android@0.2.1
-  
+  android: circleci/android@2.1.1
+
 jobs:
   build:
-    # executor: android/android
     docker:
-      - image: cimg/android:2023.11-jdk17
+      - image: cimg/openjdk:17.0
     steps:
       - checkout
+      - run:
+          name: Install Android SDK
+          command: |
+            wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+            unzip commandlinetools-linux-9477386_latest.zip
+            mkdir -p ~/android-sdk/cmdline-tools
+            mv cmdline-tools ~/android-sdk/cmdline-tools/latest
+            export ANDROID_HOME=~/android-sdk
+            export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+      - run:
+          name: Accept Android Licenses
+          command: |
+            yes | sdkmanager --licenses || true
       - restore_cache:
-          key: android-orb-v1-
+          key: android-orb-v1-{{ checksum "build.gradle" }}
       - run:
           name: Chmod permissions
-          command: sudo chmod +x ./gradlew
+          command: chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
-          key: 'android-orb-v1-{{ epoch }}'
+          key: android-orb-v1-{{ checksum "build.gradle" }}
           paths:
-            - ~/.android/build-cache
-            - ~/.android/cache
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+      - run:
+          name: Verify Java Version
+          command: |
+            java -version
+            javac -version
       - run:
           name: Run Build
           command: ./gradlew build
@@ -31,4 +47,10 @@ jobs:
           destination: reports
       - store_artifacts:  
           path: app/build/outputs/apk/debug/
-          destination: artifact-file  
+          destination: artifact-file
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
