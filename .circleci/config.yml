@@ -22,7 +22,7 @@ jobs:
           command: |
             yes | sdkmanager --licenses || true
       - restore_cache:
-          key: android-orb-v1-{{ checksum "build.gradle" }}
+          key: android-orb-v1-
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
@@ -30,7 +30,7 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
-          key: android-orb-v1-{{ checksum "build.gradle" }}
+          key: android-orb-v1-{{ epoch }}
           paths:
             - ~/.gradle/caches
             - ~/.gradle/wrapper
