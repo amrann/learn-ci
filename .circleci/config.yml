@@ -6,22 +6,35 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0
+    environment:
+      ANDROID_HOME: /home/circleci/android-sdk  
     steps:
       - checkout
+      # - run:
+      #     name: Create local.properties
+      #     command: |
+      #       touch local.properties
+      #       echo "sdk.dir=$ANDROID_HOME" >> local.properties
       - run:
-          name: Create local.properties
-          command: |
-            touch local.properties
-            echo "sdk.dir=$ANDROID_HOME" >> local.properties
+        name: Set up Android SDK
+        command: |
+          mkdir -p $ANDROID_HOME
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
       - run:
           name: Install Android SDK
+          # command: |
+          #   wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          #   unzip commandlinetools-linux-9477386_latest.zip
+          #   mkdir -p ~/android-sdk/cmdline-tools
+          #   mv cmdline-tools ~/android-sdk/cmdline-tools/latest
+          #   export ANDROID_HOME=~/android-sdk
+          #   export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           command: |
             wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
             unzip commandlinetools-linux-9477386_latest.zip
-            mkdir -p ~/android-sdk/cmdline-tools
-            mv cmdline-tools ~/android-sdk/cmdline-tools/latest
-            export ANDROID_HOME=~/android-sdk
-            export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+            mkdir -p $ANDROID_HOME/cmdline-tools
+            mv cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+            export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin  
       - run:
           name: Accept Android Licenses
           command: |
@@ -39,11 +52,16 @@ jobs:
           paths:
             - ~/.gradle/caches
             - ~/.gradle/wrapper
+      # - run:
+      #     name: Verify Java Version
+      #     command: |
+      #       java -version
+      #       javac -version
       - run:
-          name: Verify Java Version
-          command: |
-            java -version
-            javac -version
+        name: Verify Android Home
+        command: |
+          echo "ANDROID_HOME: $ANDROID_HOME"
+          ls -la $ANDROID_HOME
       - run:
           name: Run Build
           command: ./gradlew build
