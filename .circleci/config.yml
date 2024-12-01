@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/android:2022.11.2
+      - image: cimg/android:2022.10
     environment:
       ANDROID_HOME: /opt/android/sdk
       PATH: /opt/android/sdk/platform-tools:/opt/android/sdk/tools:$PATH
@@ -20,10 +20,6 @@ jobs:
       - run:
           name: Create local.properties
           command: echo "sdk.dir=$ANDROID_HOME" > local.properties
-      - run:
-          name: Install Android SDK Components
-          command: |
-            sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
       - restore_cache:
           key: android-orb-v1-
       - run:
