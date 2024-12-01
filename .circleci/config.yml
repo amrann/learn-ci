@@ -9,6 +9,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Create local.properties
+          command: |
+            touch local.properties
+            echo "sdk.dir=$ANDROID_HOME" >> local.properties
+      - run:
           name: Install Android SDK
           command: |
             wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
