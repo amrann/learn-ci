@@ -16,6 +16,9 @@ jobs:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
       - run:
+          name: Run Lint
+          command: ./gradlew lint
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
@@ -35,4 +38,7 @@ jobs:
 workflows:
   sample: 
     jobs:
-      - build
+      - lint
+      - build:
+          requires:
+            - lint
