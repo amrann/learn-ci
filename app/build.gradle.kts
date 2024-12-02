@@ -10,6 +10,10 @@ android {
   namespace = "com.dcdng.subms_3_2"
   compileSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
 
+  lint {
+    baseline = file("lint-baseline.xml")
+  }
+
   defaultConfig {
     applicationId = "com.dcdng.subms_3_2"
     minSdk = 21
