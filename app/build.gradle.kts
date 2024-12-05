@@ -13,7 +13,7 @@ android {
   defaultConfig {
     applicationId = "com.dcdng.subms_3_2"
     minSdk = 21
-    targetSdk = 33
+    targetSdk = 34
     versionCode = 1
     versionName = "1.0"
 
@@ -22,7 +22,7 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
+      isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
@@ -36,6 +36,7 @@ android {
   }
   buildFeatures {
     viewBinding = true
+    buildConfig = true
   }
   dynamicFeatures += setOf(":favorite")
 }

@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
   fun useAppContext() {
     // Context of the app under test.
     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    assertEquals("com.dcdng.subms_3_1.favorite", appContext.packageName)
+    assertEquals("com.dcdng.subms_3_2.favorite", appContext.packageName)
   }
 }

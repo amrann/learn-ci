@@ -6,7 +6,7 @@ plugins {
   id("com.google.dagger.hilt.android")
 }
 android {
-  namespace = "com.dcdng.subms_3_1.favorite"
+  namespace = "com.dcdng.subms_3_2.favorite"
   compileSdk = 34
 
   defaultConfig {
@@ -14,12 +14,13 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
-//  buildTypes {
-//    release {
-//      isMinifyEnabled = false
-//      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-//    }
-//  }
+  buildTypes {
+    release {
+      isMinifyEnabled = false
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+  }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
