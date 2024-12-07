@@ -85,8 +85,8 @@
 ###---------------End: proguard configuration for Retrofit  ----------
 #
 
-## Dontwarn StringConcatFactory
--dontwarn java.lang.invoke.StringConcatFactory
+### Dontwarn StringConcatFactory
+#-dontwarn java.lang.invoke.StringConcatFactory
 
 
 # Basic Android configuration

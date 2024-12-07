@@ -70,8 +70,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             when (result) {
               is Result.Success<*> -> {
 //                binding?.progressBar?.visibility = View.GONE
-                storyList.addAll(result.data as Collection<StoryList>)
-                addManyMarker()
+//                storyList.addAll(result.data as Collection<StoryList>)
+//                addManyMarker()
+                val data = result.data
+                if (data is List<*>) {
+                  val storyItems = data.filterIsInstance<StoryList>()
+                  storyList.addAll(storyItems)
+                  addManyMarker()
+                }
               }
               is Result.Error -> {
 //                binding?.progressBar?.visibility = View.GONE

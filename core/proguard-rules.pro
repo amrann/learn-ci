@@ -20,8 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-## Dontwarn StringConcatFactory
-#-dontwarn java.lang.invoke.StringConcatFactory
+# Dontwarn StringConcatFactory
+-dontwarn java.lang.invoke.StringConcatFactory
 
 ## Keep UserPreference class
 #-keep class com.dcdng.subms_3_2.core.data.pref.UserPreference.** { *; }

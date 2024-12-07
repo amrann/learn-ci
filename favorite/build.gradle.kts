@@ -25,6 +25,12 @@ android {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
+
+//  kapt {
+//    javacOptions {
+//      option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+//    }
+//  }
 }
 
 dependencies {
