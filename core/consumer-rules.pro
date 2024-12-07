@@ -83,3 +83,6 @@
 
 -dontwarn kotlinx.**
 ##---------------End: proguard configuration for Retrofit  ----------
+
+## Dontwarn StringConcatFactory
+-dontwarn java.lang.invoke.StringConcatFactory
