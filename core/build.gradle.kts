@@ -50,7 +50,7 @@ dependencies {
 
   implementation("androidx.paging:paging-runtime-ktx:3.1.0")
 
-  implementation("com.github.bumptech.glide:glide:4.13.1")
+  implementation("com.github.bumptech.glide:glide:4.16.0")
 
   implementation ("io.reactivex.rxjava2:rxjava:2.2.19")
   implementation ("com.jakewharton.rxbinding2:rxbinding:2.0.0")
