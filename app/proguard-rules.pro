@@ -20,17 +20,17 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-## Keep UserPreference class
-#-keep class com.dcdng.subms_3_2.core.data.pref.UserPreference.** { *; }
-#
-#-keep class com.dcdng.subms_3_2.core.data.source.local.LocalDataSource.** { *; }
-#-keep class com.dcdng.subms_3_2.core.data.source.remote.RemoteDataSource.** { *; }
-#
-## Hilt-specific rules
-#-keep class dagger.* { *; }
-#-keep class javax.inject.* { *; }
-#-keepattributes *Annotation*
-#-keepattributes Signature
-#
-## Preserve Hilt components
-#-keep class com.dcdng.subms_3_2.DaggerMyApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.** { *; }
+# Keep UserPreference class
+-keep class com.dcdng.subms_3_2.core.data.pref.UserPreference.** { *; }
+
+-keep class com.dcdng.subms_3_2.core.data.source.local.LocalDataSource.** { *; }
+-keep class com.dcdng.subms_3_2.core.data.source.remote.RemoteDataSource.** { *; }
+
+# Hilt-specific rules
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keepattributes *Annotation*
+-keepattributes Signature
+
+# Preserve Hilt components
+-keep class com.dcdng.subms_3_2.DaggerMyApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.** { *; }
