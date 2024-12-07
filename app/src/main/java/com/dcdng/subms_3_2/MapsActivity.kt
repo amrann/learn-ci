@@ -1,5 +1,6 @@
 package com.dcdng.subms_3_2
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -105,6 +106,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //    addManyMarker()
   }
 
+  @SuppressLint("SuspiciousIndentation")
   private fun addManyMarker() {
     storyList.forEach { dt ->
       val latLng = LatLng(dt.lat, dt.lon)
