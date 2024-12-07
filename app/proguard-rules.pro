@@ -34,3 +34,36 @@
 
 # Preserve Hilt components
 -keep class com.dcdng.subms_3_2.DaggerMyApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.** { *; }
+
+# Basic Android configuration
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+
+# Retrofit
+-keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+
+# Gson
+-keep class com.google.gson.** { *; }
+-dontwarn com.google.gson.**
+
+# Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+# RxJava
+-keep class rx.** { *; }
+-dontwarn rx.**
+
+# Room
+-keep class * extends androidx.room.RoomDatabase
+-dontwarn androidx.room.migration.**
