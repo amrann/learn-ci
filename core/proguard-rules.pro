@@ -20,8 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Dontwarn StringConcatFactory
--dontwarn java.lang.invoke.StringConcatFactory
+## Dontwarn StringConcatFactory
+#-dontwarn java.lang.invoke.StringConcatFactory
 
 ## Basic Android configuration
 #-keepattributes *Annotation*
