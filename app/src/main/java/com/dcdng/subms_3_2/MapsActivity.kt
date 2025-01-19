@@ -1,6 +1,5 @@
 package com.dcdng.subms_3_2
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -35,7 +34,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
   @Inject
   lateinit var storyViewModelFactory: StoryViewModelFactory
 
-  private lateinit var mMap: GoogleMap
+  private var mMap: GoogleMap? = null
   private lateinit var binding: ActivityMapsBinding
   private val boundsBuilder = LatLngBounds.Builder()
 
@@ -66,34 +65,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         authToken = user.token
         val storyViewModel = setupStoryViewModel(authToken)
         storyViewModel.getDataStories().observe(this) { result ->
-          if (result != null) {
-            when (result) {
-              is Result.Success<*> -> {
-//                binding?.progressBar?.visibility = View.GONE
-//                storyList.addAll(result.data as Collection<StoryList>)
-//                addManyMarker()
-                val data = result.data
-                if (data is List<*>) {
-                  val storyItems = data.filterIsInstance<StoryList>()
-                  storyList.addAll(storyItems)
-                  addManyMarker()
-                }
-              }
-              is Result.Error -> {
-//                binding?.progressBar?.visibility = View.GONE
-                Toast.makeText(
-                  this,
-                  "Terjadi kesalahan" + result.error,
-                  Toast.LENGTH_SHORT
-                ).show()
-              }
-              Result.Loading -> {
-//                binding?.progressBar?.visibility = View.VISIBLE
-              }
-            }
-          }
+          handleStoriesResult(result)
         }
-
       }
     }
 
@@ -102,51 +75,81 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
       .findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
   }
-  override fun onMapReady(googleMap: GoogleMap) {
-    mMap = googleMap
-    mMap.uiSettings.isZoomControlsEnabled = true
-    mMap.uiSettings.isIndoorLevelPickerEnabled = true
-    mMap.uiSettings.isCompassEnabled = true
-    mMap.uiSettings.isMapToolbarEnabled = true
 
-//    addManyMarker()
+  override fun onMapReady(googleMap: GoogleMap) {
+    mMap = googleMap.apply {
+      uiSettings.isZoomControlsEnabled = true
+      uiSettings.isIndoorLevelPickerEnabled = true
+      uiSettings.isCompassEnabled = true
+      uiSettings.isMapToolbarEnabled = true
+    }
+    addManyMarker()
   }
 
-  @SuppressLint("SuspiciousIndentation")
+
   private fun addManyMarker() {
-    storyList.forEach { dt ->
-      val latLng = LatLng(dt.lat, dt.lon)
-      mMap.addMarker(
-        MarkerOptions()
-          .position(latLng)
-          .title(dt.name)
-      )
-      boundsBuilder.include(latLng)
-    }
-    val bounds: LatLngBounds = boundsBuilder.build()
-      mMap.animateCamera(
-        CameraUpdateFactory.newLatLngBounds(
-          bounds,
-          resources.displayMetrics.widthPixels,
-          resources.displayMetrics.heightPixels,
-          300
+    mMap?.let { map ->
+      var hasPoints = false
+      storyList.forEach { dt ->
+        val latLng = LatLng(dt.lat, dt.lon)
+        map.addMarker(
+          MarkerOptions()
+            .position(latLng)
+            .title(dt.name)
         )
-      )
+        boundsBuilder.include(latLng)
+        hasPoints = true
+      }
+      if (hasPoints) {
+        val bounds: LatLngBounds = boundsBuilder.build()
+        map.animateCamera(
+          CameraUpdateFactory.newLatLngBounds(
+            bounds,
+            resources.displayMetrics.widthPixels,
+            resources.displayMetrics.heightPixels,
+            300
+          )
+        )
+      }
+    }
+  }
+
+  private fun handleStoriesResult(result: Result<*>) {
+    when (result) {
+      is Result.Success<*> -> {
+        val data = result.data
+        if (data is List<*>) {
+          val storyItems = data.filterIsInstance<StoryList>()
+          storyList.clear()
+          storyList.addAll(storyItems)
+          mMap?.let { addManyMarker() }
+        }
+      }
+      is Result.Error -> {
+        Toast.makeText(
+          this,
+          "Terjadi kesalahan: ${result.error}",
+          Toast.LENGTH_SHORT
+        ).show()
+      }
+      Result.Loading -> {
+        // Show progress bar if necessary
+      }
+    }
   }
 
   private fun setupStoryViewModel(token: String): StoryViewModel {
-    val vm: StoryViewModel by viewModels {
+    return viewModels<StoryViewModel> {
       storyViewModelFactory
+    }.value.apply {
+      updateToken(token)
     }
-    vm.updateToken(token)
-    return vm
   }
 
-//  private fun setupStoryViewModel(token: String): StoryViewModel {
-//    Log.e(TAG, "token dalam setupStoryViewModel : $token")
-//    val vm: StoryViewModel by viewModels {
-//      StoryViewModelFactory.getInstance(token)
-//    }
-//    return vm
-//  }
+  override fun onDestroy() {
+    super.onDestroy()
+    mMap?.clear()
+    mMap = null
+    storyList.clear()
+  }
 }

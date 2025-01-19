@@ -9,7 +9,7 @@ import com.dcdng.subms_3_2.core.domain.model.Login
 import com.dcdng.subms_3_2.core.domain.model.Register
 import com.dcdng.subms_3_2.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
-import com.dcdng.subms_3_2.core.utils.Result;
+import com.dcdng.subms_3_2.core.utils.Result
 import javax.inject.Inject
 import javax.inject.Singleton
 

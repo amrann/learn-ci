@@ -1,9 +1,9 @@
-package com.dcdng.subms_3_2.core.domain.usecase;
+package com.dcdng.subms_3_2.core.domain.usecase
 
 import androidx.lifecycle.MutableLiveData
 import com.dcdng.subms_3_2.core.domain.model.Login
 import com.dcdng.subms_3_2.core.domain.model.Register
-import com.dcdng.subms_3_2.core.domain.model.UserModel;
+import com.dcdng.subms_3_2.core.domain.model.UserModel
 import com.dcdng.subms_3_2.core.utils.Result
 import kotlinx.coroutines.flow.Flow
 

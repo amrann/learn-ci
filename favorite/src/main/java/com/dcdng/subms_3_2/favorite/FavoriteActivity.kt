@@ -6,11 +6,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dcdng.subms_3_2.databinding.ActivityFavoriteBinding
 import com.dcdng.subms_3_2.DetailActivity
 import com.dcdng.subms_3_2.core.di.FavoriteModuleDependencies
-import com.dcdng.subms_3_2.core.ui.adapter.ListFavoriteStoriesAdapter
+import com.dcdng.subms_3_2.core.adapter.ListFavoriteStoriesAdapter
 import com.dcdng.subms_3_2.core.utils.DataMapper
+import com.dcdng.subms_3_2.favorite.databinding.ActivityFavoriteBinding
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
@@ -42,8 +42,8 @@ class FavoriteActivity : AppCompatActivity() {
 
     adapterListFavorite.onItemClick = { selectedData ->
       val intent = Intent(this, DetailActivity::class.java)
-      val dataMap = selectedData.let { DataMapper.mapModelFavoriteStoryToResponse(it) }
-      intent.putExtra("StoryListResponse", dataMap)
+      val dataMap = selectedData.let { DataMapper.mapFavoriteStoryToStoryList(it) }
+      intent.putExtra("StoryList", dataMap)
       startActivity(intent)
     }
 

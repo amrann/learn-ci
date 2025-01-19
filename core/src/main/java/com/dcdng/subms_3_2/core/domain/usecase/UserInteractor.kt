@@ -1,4 +1,4 @@
-package com.dcdng.subms_3_2.core.domain.usecase;
+package com.dcdng.subms_3_2.core.domain.usecase
 
 import com.dcdng.subms_3_2.core.domain.model.UserModel
 import com.dcdng.subms_3_2.core.domain.irepository.IUserRepository

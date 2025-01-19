@@ -1,3 +1,4 @@
 <resources>
   <string name="retry">retry</string>
+  <string name="content_desc_preview_img">Preview Image</string>
 </resources>

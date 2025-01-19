@@ -35,8 +35,41 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     resultLogin.postValue(Result.Loading)
 
     val resp = apiService.login(email, password)
+//    resp.enqueue(object : Callback<LoginResponse> {
+//      override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+//        try {
+//          if (response.isSuccessful && response.body() != null) {
+//            val loginResponse = response.body()!!
+//            Log.e("REMOTE DATASOURCE", "response.body() : $loginResponse")
+//            msgResponse.value = loginResponse.message
+//            authToken.value = loginResponse.loginResult.token
+//            resultLogin.postValue(Result.Success(loginResponse))
+//          } else {
+//            val errorMessage = response.errorBody()?.string()?.let {
+//              try {
+//                val errResponse = JSONObject(it)
+//                errResponse.getString("message")
+//              } catch (e: Exception) {
+//                "Unknown error parsing error body"
+//              }
+//            } ?: "Error without body"
+//
+//            msgResponse.value = errorMessage
+//            resultLogin.postValue(Result.Error(errorMessage))
+//          }
+//        } catch (e: Exception) {
+//          resultLogin.postValue(Result.Error("Exception: ${e.message}"))
+//          Log.e("REMOTEDATASOURCE", "Exception : ${e.message}")
+//        }
+//      }
+//
+//      override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+//        resultLogin.postValue(Result.Error(t.message ?: "Unknown failure"))
+//      }
+//    })
     resp.enqueue(object : Callback<LoginResponse> {
       override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        Log.e("REMOTEDATASOURCE", "response : $response")
         if (response.isSuccessful) {
           Log.e("REMOTEDATASOURCE", "response.body() : ${response.body()}")
           msgResponse.value = response.body()?.message
@@ -124,6 +157,20 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
               )
               listData.add(dtList)
             }
+//            for (rt in 1..100000000) {
+//              for (dt in data) {
+//                val dtList = StoryListResponse(
+//                  dt.id,
+//                  dt.name,
+//                  dt.description,
+//                  dt.photoUrl,
+//                  dt.createdAt,
+//                  dt.lon,
+//                  dt.lat
+//                )
+//                listData.add(dtList)
+//              }
+//            }
           }
           resultDataStories.value = Result.Success(listData)
         }

@@ -20,7 +20,7 @@ class StoriesPagingSource(private val apiService: ApiService) : PagingSource<Int
       LoadResult.Page(
         data = dataList,
         prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,
-        nextKey = if (dataList.isNullOrEmpty()) null else page + 1
+        nextKey = if (dataList.isEmpty()) null else page + 1
       )
     } catch (exception: Exception) {
       return LoadResult.Error(exception)

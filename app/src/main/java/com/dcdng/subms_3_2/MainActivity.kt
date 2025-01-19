@@ -13,16 +13,13 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dcdng.subms_3_2.core.data.source.remote.response.StoryListResponse
 import com.dcdng.subms_3_2.core.di.StoryModuleDependencies
-import com.dcdng.subms_3_2.core.ui.adapter.ListStoriesAdapter
-import com.dcdng.subms_3_2.core.ui.adapter.LoadingStateAdapter
-import com.dcdng.subms_3_2.core.utils.DataMapper
+import com.dcdng.subms_3_2.core.domain.model.StoryList
+import com.dcdng.subms_3_2.core.adapter.ListStoriesAdapter
+import com.dcdng.subms_3_2.core.adapter.LoadingStateAdapter
 import com.dcdng.subms_3_2.databinding.ActivityMainBinding
 import com.dcdng.subms_3_2.di.DaggerStoryComponent
 import com.dcdng.subms_3_2.factory.StoryViewModelFactory
@@ -119,11 +116,11 @@ class MainActivity : AppCompatActivity(), ListStoriesAdapter.OnItemClickListener
           viewModel.logout()
           true
         }
-        R.id.mnMap -> {
-          val intent = Intent(this, MapsActivity::class.java)
-          startActivity(intent)
-          true
-        }
+//        R.id.mnMap -> {
+//          val intent = Intent(this, MapsActivity::class.java)
+//          startActivity(intent)
+//          true
+//        }
         R.id.mnFav -> {
           val uri = Uri.parse("subms_3_1://favorite")
           startActivity(Intent(Intent.ACTION_VIEW, uri))
@@ -161,13 +158,17 @@ class MainActivity : AppCompatActivity(), ListStoriesAdapter.OnItemClickListener
         adapter.retry()
       }
     )
-    // Collect flow
+//    // Collect flow
+//    lifecycleScope.launch {
+//      lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//        storyViewModel.dataPagingStories.collect { pagingData ->
+//          adapter.submitData(pagingData)
+//        }
+//      }
+//    }
     lifecycleScope.launch {
-      lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-        storyViewModel.dataPagingStories.collect { pagingData ->
-          val dataMap = pagingData.let { DataMapper.mapModelPagingStoryToResponse(it) }
-          adapter.submitData(dataMap)
-        }
+      storyViewModel.dataPagingStories.collect { pagingData ->
+        adapter.submitData(pagingData)
       }
     }
 
@@ -181,9 +182,9 @@ class MainActivity : AppCompatActivity(), ListStoriesAdapter.OnItemClickListener
 //    }
   }
 
-  override fun onItemClicked(data: StoryListResponse, sharedElements: List<Pair<View, String>>) {
+  override fun onItemClicked(data: StoryList, sharedElements: List<Pair<View, String>>) {
     val intent = Intent(this, DetailActivity::class.java).apply {
-      putExtra("StoryListResponse", data)
+      putExtra("StoryList", data)
     }
 
     val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(

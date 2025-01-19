@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
 
-  fun messageResp() = userUseCase.messageResp();
+  fun messageResp() = userUseCase.messageResp()
 
   fun postDataRegis(name: String, email: String, password: String) = userUseCase.postDataRegis(name, email, password)
 

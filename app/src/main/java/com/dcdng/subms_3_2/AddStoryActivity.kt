@@ -37,6 +37,8 @@ class AddStoryActivity : AppCompatActivity() {
 
   private lateinit var token: String
 
+  private var uriImg: Uri? = null
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -119,6 +121,7 @@ class AddStoryActivity : AppCompatActivity() {
   ) { uri: Uri? ->
     if (uri != null) {
       currentImageUri = uri
+      uriImg = uri
       showImage()
     } else {
       Log.d("Photo Picker", "No media selected")
@@ -131,7 +134,9 @@ class AddStoryActivity : AppCompatActivity() {
     if (isSuccess) {
       showImage()
     } else {
-      currentImageUri = null
+//      currentImageUri = null
+      currentImageUri = uriImg
+      showImage()
     }
   }
 

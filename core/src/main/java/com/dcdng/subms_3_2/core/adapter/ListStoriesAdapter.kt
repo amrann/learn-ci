@@ -1,4 +1,4 @@
-package com.dcdng.subms_3_2.core.ui.adapter
+package com.dcdng.subms_3_2.core.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +8,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dcdng.subms_3_2.core.data.source.remote.response.StoryListResponse
 import com.dcdng.subms_3_2.core.databinding.ItemStoriesBinding
+import com.dcdng.subms_3_2.core.domain.model.StoryList
 
 class ListStoriesAdapter(private val listener: OnItemClickListener) :
-  PagingDataAdapter<StoryListResponse, ListStoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
+  PagingDataAdapter<StoryList, ListStoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
     val binding = ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,7 +28,7 @@ class ListStoriesAdapter(private val listener: OnItemClickListener) :
 
   class MyViewHolder(private val binding: ItemStoriesBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(data: StoryListResponse, listener: OnItemClickListener) {
+    fun bind(data: StoryList, listener: OnItemClickListener) {
       Glide.with(itemView.context)
         .load(data.photoUrl)
         .centerCrop()
@@ -48,15 +48,15 @@ class ListStoriesAdapter(private val listener: OnItemClickListener) :
   }
 
   interface OnItemClickListener {
-    fun onItemClicked(data: StoryListResponse, sharedElements: List<Pair<View, String>>)
+    fun onItemClicked(data: StoryList, sharedElements: List<Pair<View, String>>)
   }
 
   companion object {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryListResponse>() {
-      override fun areItemsTheSame(oldItem: StoryListResponse, newItem: StoryListResponse): Boolean {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryList>() {
+      override fun areItemsTheSame(oldItem: StoryList, newItem: StoryList): Boolean {
         return oldItem == newItem
       }
-      override fun areContentsTheSame(oldItem: StoryListResponse, newItem: StoryListResponse): Boolean {
+      override fun areContentsTheSame(oldItem: StoryList, newItem: StoryList): Boolean {
         return oldItem.id == newItem.id
       }
     }

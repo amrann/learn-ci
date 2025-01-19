@@ -23,5 +23,6 @@
   <string name="title_favorite">Favorite Module</string>
   <string name="hint_desc">Description</string>
   <string name="content_desc_preview_img">Preview Image</string>
+  <string name="content_desc_floating_btn">Floating Button</string>
 
 </resources>

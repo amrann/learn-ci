@@ -22,4 +22,6 @@ class StoryViewModel (
     tokenProvider.updateToken(token)
   }
 
+//  var uriImg = ""
+
 }

@@ -15,13 +15,24 @@ import com.dcdng.subms_3_2.core.domain.model.StoryList
 
 object DataMapper {
 
-  fun mapResponseStoryListToModel(input: StoryListResponse) =
+  fun mapStoryListToFavoriteStory(input: StoryList) =
     FavoriteStory(
       id = input.id,
-      name = input.name!!,
-      description = input.description ?: "",
-      photoUrl = input.photoUrl ?: "",
-      createdAt = input.createdAt ?: "",
+      name = input.name,
+      description = input.description,
+      photoUrl = input.photoUrl,
+      createdAt = input.createdAt,
+      lon = input.lon,
+      lat = input.lat
+    )
+
+  fun mapFavoriteStoryToStoryList(input: FavoriteStory) =
+    StoryList(
+      id = input.id,
+      name = input.name,
+      description = input.description,
+      photoUrl = input.photoUrl,
+      createdAt = input.createdAt,
       lon = input.lon,
       lat = input.lat
     )
@@ -52,45 +63,33 @@ object DataMapper {
       )
     }
 
+//  fun mapResponsePagingStoryToModel(input: PagingData<StoryListResponse>): PagingData<StoryList> =
+//    input.map {
+//      StoryList(
+//        id = it.id,
+//        name = it.name!!,
+//        description = it.description!!,
+//        photoUrl = it.photoUrl!!,
+//        createdAt = it.createdAt!!,
+//        lon = it.lon,
+//        lat = it.lat
+//      )
+//    }
   fun mapResponsePagingStoryToModel(input: PagingData<StoryListResponse>): PagingData<StoryList> =
-    input.map {
+    input.map { response ->
       StoryList(
-        id = it.id,
-        name = it.name!!,
-        description = it.description!!,
-        photoUrl = it.photoUrl!!,
-        createdAt = it.createdAt!!,
-        lon = it.lon,
-        lat = it.lat
-      )
-    }
-
-  fun mapModelPagingStoryToResponse(input: PagingData<StoryList>): PagingData<StoryListResponse> =
-    input.map {
-      StoryListResponse(
-        id = it.id,
-        name = it.name,
-        description = it.description,
-        photoUrl = it.photoUrl,
-        createdAt = it.createdAt,
-        lon = it.lon,
-        lat = it.lat
+        id = response.id,
+        name = response.name ?: "",
+        description = response.description ?: "",
+        photoUrl = response.photoUrl ?: "",
+        createdAt = response.createdAt ?: "",
+        lon = response.lon ?: 0.0,
+        lat = response.lat ?: 0.0
       )
     }
 
   fun mapModelFavoriteStoryToEntity(input: FavoriteStory) =
     FavoriteStoryEntity(
-      id = input.id,
-      name = input.name,
-      description = input.description,
-      photoUrl = input.photoUrl,
-      createdAt = input.createdAt,
-      lon = input.lon,
-      lat = input.lat
-    )
-
-  fun mapModelFavoriteStoryToResponse(input: FavoriteStory) =
-    StoryListResponse(
       id = input.id,
       name = input.name,
       description = input.description,

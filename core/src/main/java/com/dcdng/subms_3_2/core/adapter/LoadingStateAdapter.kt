@@ -1,4 +1,4 @@
-package com.dcdng.subms_3_2.core.ui.adapter
+package com.dcdng.subms_3_2.core.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

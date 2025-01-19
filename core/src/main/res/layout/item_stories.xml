@@ -20,6 +20,7 @@
       android:layout_width="match_parent"
       android:layout_height="200dp"
       android:scaleType="centerCrop"
+      android:contentDescription="@string/content_desc_preview_img"
       app:layout_constraintBottom_toTopOf="@+id/tv_nama"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

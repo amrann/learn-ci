@@ -187,7 +187,7 @@ class SignUpActivity : AppCompatActivity() {
   }
 
   private fun showPasswordExistAlert(passTxt: String) {
-    binding.passwordEditText.error = if (passTxt.isNotEmpty()) passTxt else null
+    binding.passwordEditText.error = passTxt.ifEmpty { null }
     val result = binding.passwordEditText.error
     isRequiredPass = result == null
   }

@@ -1,66 +1,55 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-dontwarn java.lang.invoke.StringConcatFactory
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keep class com.dcdng.subms_3_2.core.adapter.ListFavoriteStoriesAdapter { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keep class com.dcdng.subms_3_2.core.adapter.ListStoriesAdapter { *; }
+-keep class com.dcdng.subms_3_2.core.adapter.ListStoriesAdapter$OnItemClickListener { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-keep class com.dcdng.subms_3_2.core.adapter.LoadingStateAdapter { *; }
 
-## Dontwarn StringConcatFactory
-#-dontwarn java.lang.invoke.StringConcatFactory
+-keep class com.dcdng.subms_3_2.core.data.pref.UserPreference { *; }
 
-## Basic Android configuration
-#-keepattributes *Annotation*
-#-keepattributes Signature
-#-keepattributes InnerClasses
-#
-## Retrofit
-#-keepattributes Exceptions
-#-keepclasseswithmembers class * {
-#    @retrofit2.http.* <methods>;
-#}
-#-dontwarn retrofit2.**
-#-keep class retrofit2.** { *; }
-#
-## Gson
-#-keep class com.google.gson.** { *; }
-#-dontwarn com.google.gson.**
-#
-## Glide
-#-keep public class * implements com.bumptech.glide.module.GlideModule
-#-keep public class * extends com.bumptech.glide.module.AppGlideModule
-#-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-#  **[] $VALUES;
-#  public *;
-#}
-#
-## RxJava
-#-keep class rx.** { *; }
-#-dontwarn rx.**
-#
-## Room
-#-keep class * extends androidx.room.RoomDatabase
-#-dontwarn androidx.room.migration.**
+-keep class com.dcdng.subms_3_2.core.data.source.local.LocalDataSource { *; }
 
-## Keep UserPreference class
-#-keep class com.dcdng.subms_3_2.core.data.pref.UserPreference.** { *; }
-#
-#-keep class com.dcdng.subms_3_2.core.data.source.local.LocalDataSource.** { *; }
-#-keep class com.dcdng.subms_3_2.core.data.source.remote.RemoteDataSource.** { *; }
-#
-## Preserve Hilt components
-#-keep class com.dcdng.subms_3_2.DaggerMyApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.** { *; }
+-keep class com.dcdng.subms_3_2.core.data.source.remote.RemoteDataSource { *; }
+-keep class com.dcdng.subms_3_2.core.data.source.remote.TokenProvider { *; }
+
+-keep class com.dcdng.subms_3_2.core.data.source.remote.network.ApiConfig { *; }
+-keep class com.dcdng.subms_3_2.core.data.source.remote.network.ApiService { *; }
+
+-keep class com.dcdng.subms_3_2.core.data.source.remote.response.** { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.NetworkModule { *; }
+-keep class com.dcdng.subms_3_2.core.di.NetworkModule_* { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.DataStoreModule { *; }
+-keep class com.dcdng.subms_3_2.core.di.DataStoreModule_* { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.DatabaseModule { *; }
+-keep class com.dcdng.subms_3_2.core.di.DatabaseModule_* { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.FavoriteModuleDependencies { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.RepositoryModule { *; }
+-keep class com.dcdng.subms_3_2.core.di.RepositoryModule_* { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.StoryModuleDependencies { *; }
+
+-keep class com.dcdng.subms_3_2.core.di.TokenModule { *; }
+-keep class com.dcdng.subms_3_2.core.di.TokenModule_* { *; }
+
+-keep class com.dcdng.subms_3_2.core.domain.irepository.** { *; }
+
+-keep class com.dcdng.subms_3_2.core.domain.model.** { *; }
+
+-keep class com.dcdng.subms_3_2.core.domain.usecase.** { *; }
+
+-keep class com.dcdng.subms_3_2.core.utils.Result { *; }
+-keep class com.dcdng.subms_3_2.core.utils.Result$* { *; }
+
+-keep class com.dcdng.subms_3_2.core.utils.AppExecutors { *; }
+-keep class com.dcdng.subms_3_2.core.utils.CustomButton { *; }
+-keep class com.dcdng.subms_3_2.core.utils.DataMapper { *; }
+-keep class com.dcdng.subms_3_2.core.utils.EmailEditText { *; }
+-keep class com.dcdng.subms_3_2.core.utils.PasswordEditText { *; }
+-keep class com.dcdng.subms_3_2.core.utils.UtilsKt { *; }

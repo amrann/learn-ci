@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.dcdng.subms_3_2.core.data.source.remote.response.StoryListResponse
+import com.dcdng.subms_3_2.core.domain.model.StoryList
 import com.dcdng.subms_3_2.databinding.ActivityDetailBinding
 import com.dcdng.subms_3_2.viewmodel.DetailViewModel
 import com.dcdng.subms_3_2.viewmodel.MainViewModel
@@ -56,12 +57,15 @@ class DetailActivity : AppCompatActivity() {
   private fun setupData() {
     @Suppress("DEPRECATION")
     val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      intent.getParcelableExtra("StoryListResponse", StoryListResponse::class.java)
+      intent.getParcelableExtra("StoryList", StoryList::class.java)
     } else {
-      intent.getParcelableExtra<StoryListResponse>("StoryListResponse") as StoryListResponse
+//      intent.getParcelableExtra<StoryListResponse>("StoryList") as StoryList
+      intent.getParcelableExtra<StoryList>("StoryList") as StoryList
     }
 
-    val dataMap = data?.let { DataMapper.mapResponseStoryListToModel(it) }
+    Log.e("MERANCHECK", "data setupData => $data")
+
+    val dataMap = data?.let { DataMapper.mapStoryListToFavoriteStory(it) }
 
     detailViewModel.listFavoriteStories.observe(this) { dataList ->
       isIdExists = dataList.any { it.id == dataMap?.id }
