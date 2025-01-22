@@ -13,8 +13,11 @@ import com.dcdng.subms_3_2.core.data.source.remote.response.RegisterResponse
 import com.dcdng.subms_3_2.core.data.source.remote.network.ApiService
 import com.dcdng.subms_3_2.core.data.source.remote.response.StoriesResponse
 import com.dcdng.subms_3_2.core.data.source.remote.response.StoryListResponse
+import com.dcdng.subms_3_2.core.data.source.remote.response.StoryUploadResponse
 import com.dcdng.subms_3_2.core.utils.Result
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -193,5 +196,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         StoriesPagingSource(apiService)
       }
     ).flow
+  }
+
+  suspend fun postStoryUpload(
+    multipartBody: MultipartBody.Part,
+    requestBody: RequestBody
+  ): StoryUploadResponse {
+    return apiService.uploadImage(multipartBody, requestBody)
   }
 }

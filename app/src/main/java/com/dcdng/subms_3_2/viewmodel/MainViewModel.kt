@@ -8,6 +8,8 @@ import com.dcdng.subms_3_2.core.domain.model.UserModel
 import com.dcdng.subms_3_2.core.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,4 +24,6 @@ class MainViewModel @Inject constructor(private val userUseCase: UserUseCase) : 
       userUseCase.logout()
     }
   }
+
+  suspend fun uploadImage(multipartBody: MultipartBody.Part, requestBody: RequestBody) = userUseCase.postStoryUpload(multipartBody, requestBody)
 }

@@ -7,9 +7,12 @@ import com.dcdng.subms_3_2.core.data.source.remote.RemoteDataSource
 import com.dcdng.subms_3_2.core.domain.irepository.IUserRepository
 import com.dcdng.subms_3_2.core.domain.model.Login
 import com.dcdng.subms_3_2.core.domain.model.Register
+import com.dcdng.subms_3_2.core.domain.model.StoryUpload
 import com.dcdng.subms_3_2.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import com.dcdng.subms_3_2.core.utils.Result
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,5 +64,13 @@ class UserRepository @Inject constructor(
       }
     }
     return result
+  }
+
+  override suspend fun postStoryUpload(
+    multipartBody: MultipartBody.Part,
+    requestBody: RequestBody
+  ): StoryUpload {
+    val dataResp = remoteDataSource.postStoryUpload(multipartBody, requestBody)
+    return DataMapper.mapResponseStoryUploadToModel(dataResp)
   }
 }

@@ -12,8 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
-import com.dcdng.subms_3_2.core.data.source.remote.response.StoryUploadResponse
-import com.dcdng.subms_3_2.core.data.source.remote.network.ApiConfig
+import com.dcdng.subms_3_2.core.domain.model.StoryUpload
 import com.dcdng.subms_3_2.databinding.ActivityAddStoryBinding
 import com.dcdng.subms_3_2.core.utils.getImageUri
 import com.dcdng.subms_3_2.core.utils.reduceFileImage
@@ -89,8 +88,7 @@ class AddStoryActivity : AppCompatActivity() {
       )
       lifecycleScope.launch {
         try {
-          val apiService = ApiConfig.getApiService(token)
-          val successResponse = apiService.uploadImage(multipartBody, requestBody)
+          val successResponse = viewModel.uploadImage(multipartBody, requestBody)
           showLoading(false)
           AlertDialog.Builder(this@AddStoryActivity).apply {
             setTitle("Yeah!")
@@ -106,7 +104,7 @@ class AddStoryActivity : AppCompatActivity() {
           }
         } catch (e: HttpException) {
           val errorBody = e.response()?.errorBody()?.string()
-          val errorResponse = Gson().fromJson(errorBody, StoryUploadResponse::class.java)
+          val errorResponse = Gson().fromJson(errorBody, StoryUpload::class.java)
           showToast(errorResponse.message)
           showLoading(false)
         }

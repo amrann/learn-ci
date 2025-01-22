@@ -7,11 +7,13 @@ import com.dcdng.subms_3_2.core.data.source.local.entity.FavoriteStoryEntity
 import com.dcdng.subms_3_2.core.data.source.remote.response.LoginResponse
 import com.dcdng.subms_3_2.core.data.source.remote.response.LoginResultResponse
 import com.dcdng.subms_3_2.core.data.source.remote.response.RegisterResponse
+import com.dcdng.subms_3_2.core.data.source.remote.response.StoryUploadResponse
 import com.dcdng.subms_3_2.core.domain.model.FavoriteStory
 import com.dcdng.subms_3_2.core.domain.model.Login
 import com.dcdng.subms_3_2.core.domain.model.LoginResult
 import com.dcdng.subms_3_2.core.domain.model.Register
 import com.dcdng.subms_3_2.core.domain.model.StoryList
+import com.dcdng.subms_3_2.core.domain.model.StoryUpload
 
 object DataMapper {
 
@@ -116,4 +118,8 @@ object DataMapper {
     token = input.token
   )
 
+  fun mapResponseStoryUploadToModel(input: StoryUploadResponse) = StoryUpload(
+    error = input.error,
+    message = input.message
+  )
 }
